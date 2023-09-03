@@ -1,0 +1,12 @@
+version: '3.8'
+
+services:
+  fastapi-text-analysis:
+    image: pavelgural/fastapi-text-analysis:1.0.0
+    container_name: fastapi-text-analysis
+    restart: always
+    pids_limit: 1500
+    ports:
+      - "5000:5000"
+    volumes:
+      - ./article_examples:/article_examples
