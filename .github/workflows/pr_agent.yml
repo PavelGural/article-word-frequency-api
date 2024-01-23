@@ -1,0 +1,27 @@
+on:
+  pull_request:
+  issue_comment:
+
+jobs:
+  pr_agent_job:
+    runs-on: ubuntu-latest
+    permissions:
+      issues: write
+      pull-requests: write
+      contents: write
+    name: Run pr agent on every pull request, respond to user comments
+    steps:
+      - name: PR Agent action step
+        id: pragent
+        uses: Codium-ai/pr-agent@main
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          OPENAI_KEY: ${{ secrets.API_KEY }}
+          OPENAI_API_TYPE: 'azure'
+          OPENAI_API_VERSION: '2023-09-15-preview'
+          OPENAI_API_BASE: 'https://${{ secrets.AZURE_OPENAI_NAME }}.openai.azure.com'
+          OPENAI.DEPLOYMENT_ID: ${{ secrets.AZURE_DEPLOYMENT_NAME }}
+          OPENAI.CONFIG_MODEL: 'gpt-4'
+          github_action.auto_review: "true"
+          github_action.auto_describe: "true"
+          github_action.auto_improve: "true"
